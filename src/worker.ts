@@ -107,11 +107,18 @@ const dealPriceCostFn = (d: Deal) => d.cost * (1 - d.discount / 100);
 const dealDurationCostFn = ({ duration: { h, m } }: Deal) =>
   parseInt(h) * 60 + parseInt(m);
 
-expose({
+const allCities = [...new Set(Object.keys(nodes))];
+
+const RPC = {
+  allCities,
   dealPriceCostFn,
   dealDurationCostFn,
   findCheapestPath: (startNode: string, endNode: string) =>
     findPath(nodes, startNode, endNode, [dealPriceCostFn, dealDurationCostFn]),
   findFastestPath: (startNode: string, endNode: string) =>
     findPath(nodes, startNode, endNode, [dealDurationCostFn, dealPriceCostFn]),
-});
+} as const;
+
+export type TripSorterWorkerType = typeof RPC;
+
+expose(RPC);

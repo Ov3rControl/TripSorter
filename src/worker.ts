@@ -51,6 +51,9 @@ const minCostForNode = (
 
   for (let i = 0; i < costFns.length; i++) {
     // costFns are sorted by priority so if any of them are less than deal
+    if (currNodeCost[i] == lowestCost.cost[i]) continue;
+    if (currNodeCost[i] > lowestCost.cost[i]) break;
+
     if (currNodeCost[i] < lowestCost.cost[i]) {
       return { cost: currNodeCost, reference: deal.reference };
     }

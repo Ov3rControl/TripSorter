@@ -4,6 +4,8 @@ import { styles } from "./TripSorterStyles";
 import { sortCriteriaENUM, useTripSorter } from "./hooks/useTripSorter";
 import { Select } from "./components/Select";
 import { RadioButton } from "./components/RadioButton";
+import { getDuration } from "./utils/getDuration";
+import { getTotalPrice } from "./utils/getTotalPrice";
 
 export const TripSorter: FunctionComponent = (): JSX.Element => {
   const {
@@ -20,9 +22,14 @@ export const TripSorter: FunctionComponent = (): JSX.Element => {
 
   const renderer = useCallback(() => {
     if (deals && !isLoading) {
-      return deals?.map((deal) => (
-        <TripResultsCard key={deal.reference} deal={deal} />
-      ));
+      return (
+        <>
+          {deals?.map((deal) => (
+            <TripResultsCard key={deal.reference} deal={deal} />
+          ))}
+          <TripTotalCard deals={deals} />
+        </>
+      );
     }
 
     return (
@@ -102,7 +109,7 @@ type TripResultsCardProps = {
 };
 
 const TripResultsCard: FunctionComponent<TripResultsCardProps> = memo(
-  ({ deal }: TripResultsCardProps): JSX.Element => {
+  ({ deal }): JSX.Element => {
     return (
       <div style={styles.tripCard}>
         <div style={styles.tripDetails}>
@@ -119,6 +126,28 @@ const TripResultsCard: FunctionComponent<TripResultsCardProps> = memo(
           </div>
         </div>
         <p style={styles.tripPrice}>{deal.cost} €</p>
+      </div>
+    );
+  }
+);
+
+type TripTotalCardProps = {
+  readonly deals: Deal[];
+};
+
+const TripTotalCard: FunctionComponent<TripTotalCardProps> = memo(
+  ({ deals }) => {
+    const duration = getDuration(deals);
+    const totalPrice = getTotalPrice(deals);
+
+    return (
+      <div style={styles.tripCard}>
+        <div style={styles.tripDetails}>
+          <div style={styles.tripHeader}>
+            <p>{duration}</p>
+            <p>{totalPrice}</p>
+          </div>
+        </div>
       </div>
     );
   }

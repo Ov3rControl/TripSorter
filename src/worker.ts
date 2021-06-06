@@ -106,8 +106,8 @@ const findPath = (
   return generateRoute(nodeCost, endNode);
 };
 
-const dealPriceCostFn = (d: Deal) => d.cost * (1 - d.discount / 100);
-const dealDurationCostFn = ({ duration: { h, m } }: Deal) =>
+export const dealPriceCostFn = (d: Deal) => d.cost * (1 - d.discount / 100);
+export const dealDurationCostFn = ({ duration: { h, m } }: Deal) =>
   parseInt(h) * 60 + parseInt(m);
 
 const allCities = [...new Set(Object.keys(nodes))];

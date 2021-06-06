@@ -8,5 +8,5 @@ export const getDuration = (deals: Deal[]) => {
     .toString()
     .padStart(2, "0");
   const minutes = (totalMinutes % 60).toString().padStart(2, "0");
-  return `${hours}:${minutes}`;
+  return `${hours}h${minutes}m`;
 };

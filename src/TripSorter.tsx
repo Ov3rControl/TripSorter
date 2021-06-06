@@ -144,8 +144,9 @@ const TripTotalCard: FunctionComponent<TripTotalCardProps> = memo(
       <div style={styles.tripCard}>
         <div style={styles.tripDetails}>
           <div style={styles.tripHeader}>
+            <p>Total</p>
             <p>{duration}</p>
-            <p>{totalPrice}</p>
+            <p>{totalPrice} €</p>
           </div>
         </div>
       </div>

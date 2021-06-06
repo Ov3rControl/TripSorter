@@ -1,10 +1,11 @@
 import React from "react";
 import "./App.css";
+import { TripSorter } from "./TripSorter";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header"></header>
+      <TripSorter />
     </div>
   );
 }

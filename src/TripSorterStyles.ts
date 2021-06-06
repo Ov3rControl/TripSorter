@@ -35,7 +35,7 @@ export const styles: stylesType = {
     alignItems: "center",
     justifyContent: "space-between",
   },
-  seperator: {
+  separator: {
     margin: "0px 10px",
     color: "white",
   },

@@ -24,7 +24,7 @@ export const useTripSorter = () => {
   const [trip, setTrip] = useState({ from: "", to: "" });
 
   const [sortCriteria, setSortCriteria] = useState<sortCriteriaENUM>(
-    () => sortCriteriaENUM.CHEAPEST
+    sortCriteriaENUM.FASTEST
   );
 
   const handleSelect = useCallback(
@@ -38,11 +38,18 @@ export const useTripSorter = () => {
   const handleSortCriteria = useCallback(
     (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
       const { name } = event.currentTarget;
+      console.log({ name });
+      switch (name) {
+        case "Cheapest":
+          setSortCriteria(sortCriteriaENUM.CHEAPEST);
+          break;
 
-      if (name === "Cheapest") {
-        setSortCriteria(sortCriteriaENUM.CHEAPEST);
-      } else {
-        setSortCriteria(sortCriteriaENUM.FASTEST);
+        case "Fastest":
+          setSortCriteria(sortCriteriaENUM.FASTEST);
+          break;
+
+        default:
+          break;
       }
     },
     []
@@ -62,10 +69,11 @@ export const useTripSorter = () => {
         workerApi.findCheapestPath(trip.from, trip.to).then((path: Deal[]) => {
           setData({ isLoading: false, deals: path });
         });
+
         break;
     }
     setTrip({ from: "", to: "" });
-  }, [workerApi, setData, trip]);
+  }, [workerApi, setData, trip, sortCriteria]);
 
   useEffect(() => {
     workerApi.allCities.then((cities) => setCities(cities));
